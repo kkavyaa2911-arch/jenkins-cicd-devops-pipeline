@@ -8,9 +8,15 @@ pipeline {
             }
         }
 
+        stage('Install Dependencies') {
+            steps {
+                sh 'pip install -r app/requirements.txt'
+            }
+        }
+
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                sh 'python -m pytest -v'
             }
         }
 
