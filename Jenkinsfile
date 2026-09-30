@@ -10,13 +10,13 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'pip install -r app/requirements.txt'
+                sh 'pip3 install -r app/requirements.txt'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'python -m pytest -v'
+                sh 'python3 -m pytest -v'
             }
         }
 
