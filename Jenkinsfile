@@ -23,11 +23,11 @@ pipeline {
             }
         }
 
-        stage('Build') {
-            steps {
-                echo 'Building application...'
-            }
-        }
+ stage('Docker Build') {
+    steps {
+        sh 'docker build -t jenkins-flask-app:${BUILD_NUMBER} .'
+    }
+}
 
         stage('Deploy') {
             steps {
