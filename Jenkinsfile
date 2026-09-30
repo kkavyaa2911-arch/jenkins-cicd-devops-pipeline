@@ -28,11 +28,23 @@ pipeline {
         sh 'docker build -t jenkins-flask-app:${BUILD_NUMBER} .'
     }
 }
+stage('Deploy') {
+    steps {
+        sh '''
+            docker rm -f jenkins-flask-container || true
 
-        stage('Deploy') {
-            steps {
-                echo 'Deploying application...'
-            }
-        }
+            docker run -d \
+              --name jenkins-flask-container \
+              -p 5000:5000 \
+              jenkins-flask-app:${BUILD_NUMBER}
+        '''
+    }
+}
+stage('Health Check') {
+    steps {
+        sh '''
+            sleep 5
+            curl -f http://host.docker.internal:5000/health
+        '''
     }
 }
